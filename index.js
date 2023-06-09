@@ -26,8 +26,6 @@ let playerColor = ''
 
 createBoard();
 placeCheckers();
-start();
-
 
 function placeCheckers() {
 
@@ -74,10 +72,6 @@ function createBoard() {
             row.appendChild(square)
         }
     }
-}
-
-function start() {
-    console.log('starting...')
 }
 
 function clickSquare() {
