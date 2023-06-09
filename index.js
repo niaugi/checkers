@@ -21,7 +21,7 @@ let emptySquare = [
 
 let rowToRemove = 0;
 let colToRemove = 0;
-
+let direction = Number;
 let playerColor = ''
 
 createBoard();
@@ -31,11 +31,11 @@ start();
 
 function placeCheckers() {
 
-    placeThem(whiteCheckersInit, 'O');
-    placeThem(blackCheckersInit, 'X');
-    placeThem(emptySquare, '');
+    placeFigure(whiteCheckersInit, 'O');
+    placeFigure(blackCheckersInit, 'X');
+    placeFigure(emptySquare, '');
 
-    function placeThem(checkersColor, checkerFigure) {
+    function placeFigure(checkersColor, checkerFigure) {
         for (let idS = 0; idS < checkersColor.length; idS++) {
             let row = checkersColor[idS][0]
             let col = checkersColor[idS][1]
@@ -82,7 +82,7 @@ function start() {
 
 function clickSquare() {
 
-
+    //coming from addEventListener - this.id == 
     console.log(this.id);
     let thisSquare = document.getElementById(this.id)
 
@@ -99,11 +99,38 @@ function clickSquare() {
         colToRemove = this.id[5]
     }
     else if (thisSquare.innerText == '') {
+        let newRow = this.id[3]
+        let newCol = this.id[5]
         console.log(`esam else if, playerColor = ${playerColor}`)
         if (playerColor) {
-            thisSquare.innerText = playerColor;
-            document.getElementById(`pos${rowToRemove}-${colToRemove}`).innerText = ''
+            //! adding logic if move is legal:
+            if (testMove()) {
+                //* removes old checker
+                document.getElementById(`pos${rowToRemove}-${colToRemove}`).innerText = ''
+                //* add new checker
+                thisSquare.innerText = playerColor;
+            }
+
+            function testMove() {
+
+                let stepForward = 0
+                let stepSides = 0
+                // console.log('testMove function data: ' + newRow + newCol)
+                if (playerColor == 'O') { stepForward = rowToRemove - newRow }
+                if (playerColor == 'X') { stepForward = newRow - rowToRemove }
+                if (stepForward == 1) {
+                    stepSides = Math.abs(newCol - colToRemove)
+                    console.log({ stepSides })
+                    if (stepSides == 1) {
+                        return true
+                    }
+                }
+                else return false
+            }
+
+
         }
+        //* reset player
         playerColor = ''
     }
 
