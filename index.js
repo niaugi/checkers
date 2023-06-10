@@ -2,6 +2,7 @@ let player = ''
 let oldRow = 0;
 let oldCol = 0;
 let whiteActive = true
+let inCaptureProcess = false
 //* ------------- START -----------------
 createBoard();
 placeCheckers();    //! placeCheckers has eventListener - clickSquare 
@@ -52,7 +53,7 @@ function clickSquare() {
             player = ''
             whiteActive = !whiteActive
             function captureMove() {
-
+                inCaptureProcess = true
                 if (stepForward == 2) {
                     console.log('you trying HOP over 2 ROWS!')
                     stepSides = Math.abs(newCol - oldCol)
@@ -68,11 +69,10 @@ function clickSquare() {
                             document.getElementById(`pos${oldRow}-${oldCol}`).innerText = ''
                             thisSquare.innerText = player;
                         }
+                        //! test for another hop over opponent
                         else return false
                     }
                 }
-
-
             }
             //* adding logic if move is legal:
             function oneStepMove() {
@@ -85,9 +85,6 @@ function clickSquare() {
                 }
                 else return false
             }
-
-            //* reset and reverse activeplayer
-
         }
     }
 
