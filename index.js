@@ -15,8 +15,7 @@ function clickSquare() {
 
     //! coming from addEventListener: this.id
     let thisSquare = document.getElementById(this.id)
-    // console.log(this.id);
-    // console.log({ thisSquare })
+    // thisSquare.classList.toggle('square-active')
     if (thisSquare.innerText == 'O' && whiteActive) {
         console.log('if whiteActive TRUE')
         player = 'O'
@@ -35,29 +34,49 @@ function clickSquare() {
         let newCol = this.id[5]
         console.log(`ELSE IF, player = ${player}`)
         if (player) {
-            if (testMove()) {
+            let stepSides = 0
+            if (player == 'O') { stepForward = oldRow - newRow }
+            if (player == 'X') { stepForward = newRow - oldRow }
+            if (oneStepMove()) {
                 //* removes old checker
                 document.getElementById(`pos${oldRow}-${oldCol}`).innerText = ''
                 //* add new checker
                 thisSquare.innerText = player;
                 //* RESET & INVERSE variables
-                player = ''
-                whiteActive = !whiteActive
             }
             else if (captureMove()) {
 
-            }
+                console.log('captureMove is TRUE')
 
+            }
+            player = ''
+            whiteActive = !whiteActive
             function captureMove() {
+
+                if (stepForward == 2) {
+                    console.log('you trying HOP over 2 ROWS!')
+                    stepSides = Math.abs(newCol - oldCol)
+                    if (stepSides == 2) {
+                        console.log('you trying HOP over 2 COLS!')
+                        //! test if opponent is in the middle
+                        let middleRow = (Number(newRow) + Number(oldRow)) / 2;
+                        let middleCol = (Number(newCol) + Number(oldCol)) / 2;
+                        let middleSquare = document.getElementById(`pos${middleRow}-${middleCol}`)
+                        console.log(middleSquare.innerText)
+                        if (middleSquare.innerText !== player && middleSquare.innerText !== '') {
+                            middleSquare.innerText = ''
+                            document.getElementById(`pos${oldRow}-${oldCol}`).innerText = ''
+                            thisSquare.innerText = player;
+                        }
+                        else return false
+                    }
+                }
+
 
             }
             //* adding logic if move is legal:
-            function testMove() {
+            function oneStepMove() {
 
-                let stepForward = 0
-                let stepSides = 0
-                if (player == 'O') { stepForward = oldRow - newRow }
-                if (player == 'X') { stepForward = newRow - oldRow }
                 if (stepForward == 1) {
                     stepSides = Math.abs(newCol - oldCol)
                     if (stepSides == 1) {
