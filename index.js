@@ -16,6 +16,7 @@ let direction = Number;
 let playerColor = ''
 let currentRow = 0;
 let currentCol = 0;
+let firstMove = 'O'
 //* ------------- START -----------------
 createBoard();
 placeCheckers();    //! placeCheckers has eventListener - clickSquare 
