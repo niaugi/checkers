@@ -35,6 +35,7 @@ main {
     place-items: center;
     width: 50px;
     aspect-ratio: 1;
+    font-weight: bold;
 }
 
 .square:hover {
