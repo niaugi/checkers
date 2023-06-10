@@ -42,3 +42,11 @@ footer {
     margin: auto 0 50px 0;
     text-align: center;
 }
+
+.versions {
+    margin-top: 1rem;
+}
+
+.versions>p {
+    margin: 0.1rem auto;
+}
